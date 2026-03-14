@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 约克春晚执行细节看板</title>
+    <!-- 使用 Tailwind CSS 进行快速样式构建 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide 图标库 -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+
+        .active-tab {
+            background-color: #dc2626 !important;
+            border-color: #dc2626 !important;
+            color: white !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .active-tab .node-badge {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+        }
+        .active-tab .chevron-icon {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body class="text-slate-900 antialiased">
+
+    <div class="max-w-7xl mx-auto p-2 md:p-6">
+        
+        <!-- 顶部标题栏 -->
+        <header class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-red-600 p-2 rounded-lg text-white shadow-lg">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-slate-800 tracking-tight uppercase">2026 约克春晚执行细节看板</h1>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Digital Command Center · v2.0 HTML Version</p>
+                </div>
+            </div>
+            
+            <div class="relative w-full md:w-64">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="搜索节目或编号..."
+                    class="w-full bg-slate-50 border border-slate-200 rounded-full py-2 pl-10 pr-4 text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20"
+                >
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- 左侧导航列表 -->
+            <div class="lg:col-span-4 h-[calc(100vh-180px)] overflow-y-auto pr-2 custom-scrollbar" id="sidebarList">
+                <!-- 列表内容由 JS 生成 -->
+            </div>
+
+            <!-- 右侧详情展示区 -->
+            <div class="lg:col-span-8 sticky top-6">
+                <div id="detailView" class="bg-white rounded-[2rem] border border-slate-200 shadow-xl overflow-hidden">
+                    <!-- 详情内容由 JS 生成 -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 底部图例 -->
+        <div class="mt-8 flex flex-wrap gap-6 justify-center bg-white/50 p-4 rounded-2xl border border-dashed border-slate-300">
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-black">
+                <span class="w-3 h-3 rounded-full bg-red-600"></span> 关键催场
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-black">
+                <span class="w-3 h-3 rounded-full bg-amber-500"></span> 执行重点
+            </div>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-black uppercase">
+                 <i data-lucide="mic" class="w-3 h-3"></i> HH-手持 / HM-耳麦 / DPA-乐器麦 / M5-电容麦
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 全量流程数据
+        const galaFlow = [
+            {
+                id: "00",
+                name: "开场情景剧 (摸黑)",
+                time: "18:55",
+                mcs: ["孙、郑、吴", "方、汪"],
+                detail: "全场黑场，三位主持人摸黑站定。方、汪在情景剧中段加入“赶年兽”互动。",
+                steps: [
+                    { role: "二楼催场", action: "18:45 确保5位主持人在二楼集结完毕" },
+                    { role: "一楼就位", action: "18:55 侧台待命，检查 HM*3 及 HH*2 状态" },
+                    { role: "执行重点", action: "注意黑场安全，方、汪持手持麦在转折点准确切入舞台" }
+                ],
+                tech: "HM*3 (孙郑吴) + HH*2 (方汪)",
+                props: "无"
+            },
+             {
+                id: "01",
+                name: "民乐《春节序曲》",
+                time: "19:00",
+                mcs: ["(乐团演出)"],
+                detail: "约克民乐团开场大作。需注意弦乐与钢琴的音量平衡。",
+                steps: [
+                    { role: "二楼催场", action: "18:50 乐团集结，协助搬运乐器下楼" },
+                    { role: "一楼就位", action: "开场致辞中引导至侧台，序曲前奏起立即登场" },
+                    { role: "执行重点", action: "傅弈飞确认 DPA*4 及钢琴 DI 盒接线稳固" }
+                ],
+                tech: "DPA*4 (弦乐), E602*1 (古筝), DI*1 (钢琴)",
+                props: "古筝架、谱架、凳子"
+            },
+            {
+                id: "02",
+                name: "正式开场 (5人合体)",
+                time: "19:02",
+                mcs: ["全体主持人"],
+                detail: "情景剧结束，等待徐瑞柯老师指令，五人上台正中站定，齐声宣布晚会正式开始。",
+                steps: [
+                    { role: "舞台执行", action: "确认五人站位点标，此时所有麦克风音量全开" },
+                    { role: "催场接力", action: "准备嘉宾致辞环节" }
+                ],
+                tech: "HH*5 (五位主持人)",
+                props: "无"
+            },
+           
+            {
+                id: "04",
+                name: "嘉宾致辞: Martin市长",
+                time: "19:15",
+                mcs: ["汪子鑫", "吴瑞珂"],
+                detail: "汪、吴介绍市长。",
+                steps: [
+                    { role: "现场礼仪", action: "19:10 引导市长到台侧" },
+                    { role: "主持人流转", action: "汪、吴顺势移动至舞台右侧主持位" }
+                ],
+                tech: "主持人 HH*2, 嘉宾专用 HH*1",
+                props: "无"
+            },
+            {
+                id: "05",
+                name: "嘉宾致辞: 查理·杰弗瑞校长",
+                time: "19:20",
+                mcs: ["郑鸿宇", "方彦威"],
+                detail: "郑、方介绍。强调约克历史名城的多元性与包容性。感谢约克大学对中国学子的托举与支持。",
+                steps: [
+                    { role: "二楼催场", action: "19:15 引导校长下楼" },
+                    { role: "一楼就位", action: "市长致辞中在侧台等待交接" }
+                ],
+                tech: "主持人 HH*2, 嘉宾专用 HH*1",
+                props: "无"
+            },
+            {
+                id: "06",
+                name: "嘉宾致辞: 李显灿主席",
+                time: "19:25",
+                mcs: ["孙子轩", "汪子鑫"],
+                detail: "孙、汪介绍。学联主席代表学子致欢迎辞。",
+                steps: [
+                    { role: "执行重点", action: "主席致辞完毕后，准备全员上台进行嘉宾点名" }
+                ],
+                tech: "主持人 HH*2, 主席 HH*1",
+                props: "无"
+            },
+            {
+                id: "07",
+                name: "嘉宾点名 (全体主持人)",
+                time: "19:30",
+                mcs: ["全体主持人"],
+                detail: "五位主持人共同介绍在场的各位参赞、治安官、经理等重要嘉宾。",
+                steps: [
+                    { role: "舞台执行", action: "主持人不下台，正中站定。注意大屏对应嘉宾 PPT 切换" },
+                    { role: "催场接力", action: "中文学校合唱团在二楼集结准备下楼" }
+                ],
+                tech: "HH*5 全开",
+                props: "无"
+            },
+            {
+                id: "11",
+                name: "合唱《世界赠与我的》",
+                time: "19:35",
+                mcs: ["方彦威", "郑鸿宇"],
+                detail: "篇章一开场。约克中文学校师生代表带来的温情合唱。",
+                steps: [
+                    { role: "二楼催场", action: "19:15 引导合唱团集结，嘉宾致辞末段开始下楼" },
+                    { role: "一楼就位", action: "19:28 侧台排队，引导孩子保持安静" },
+                    { role: "舞台执行", action: "道具组 30s 内根据地胶布置 M5 合唱麦" }
+                ],
+                tech: "M5*4 (合唱), HH*3 (领唱), DI*1",
+                props: "谱架、琴桌"
+            },
+            {
+                id: "12",
+                name: "乐器《兰亭序》",
+                time: "19:45",
+                mcs: ["汪子鑫", "郑鸿宇"],
+                detail: "书法与古风乐器的跨时空对话。拾音重点在筝、琵琶与胡琴。",
+                steps: [
+                    { role: "执行重点", action: "极速撤除麦架。傅弈飞指挥道具组入场搬运琴桌" },
+                    { role: "催场接力", action: "19:25 乐手已在二楼集结待命" }
+                ],
+                tech: "DPA*3, 播放伴奏",
+                props: "琴桌、琴凳、谱架"
+            },
+            {
+                id: "13",
+                name: "十佳歌手 (合唱串烧)",
+                time: "19:55",
+                mcs: ["汪子鑫", "吴瑞珂"],
+                detail: "青春篇章的开启。两位歌手带来的流行金曲串烧。",
+                steps: [
+                    { role: "一楼就位", action: "19:40 侧台完成手持麦分发并确认编号" },
+                    { role: "执行重点", action: "注意歌手上台的动线，避免与撤场道具撞车" }
+                ],
+                tech: "HH*2",
+                props: "无"
+            },
+            {
+                id: "14",
+                name: "爵士《一个美国人在巴黎》",
+                time: "20:05",
+                mcs: ["孙子轩", "郑鸿宇"],
+                detail: "中西交融。单簧管与钢琴的即兴碰撞。",
+                steps: [
+                    { role: "一楼就位", action: "侧台检查单簧管拾音麦及钢琴 DI 状态" }
+                ],
+                tech: "DPA*1 (单簧管), DI*1 (钢琴)",
+                props: "琴桌、琴凳"
+            },
+            {
+                id: "15",
+                name: "合唱《上春山》",
+                time: "20:15",
+                mcs: ["郑鸿宇", "方彦威"],
+                detail: "万物复苏的生机。合唱团第二次登场，注意节奏欢快感。",
+                steps: [
+                    { role: "舞台执行", action: "二次布置 M5 麦克风架。傅弈飞确认麦位高度" }
+                ],
+                tech: "M5*4, HH*2 (领唱), DI*1",
+                props: "无"
+            },
+            {
+                id: "16",
+                name: "古琴《酒狂》",
+                time: "20:25",
+                mcs: ["郑鸿宇", "汪子鑫"],
+                detail: "洒脱旷达的东方神韵。古琴收音需极高增益，防止反馈啸叫。",
+                steps: [
+                    { role: "执行重点", action: "撤除麦架。搬运琴桌。" }
+                ],
+                tech: "M5*1 E602*1",
+                props: "琴桌、琴凳"
+            },
+            {
+                id: "17",
+                name: "韩舞团舞串烧",
+                time: "20:35",
+                mcs: ["郑鸿宇", "吴瑞珂"],
+                detail: "燃炸全场。青春的热情与律动。纯播放伴奏。",
+                steps: [
+                    { role: "催场接力", action: "20:00 舞团二楼集结。确认舞蹈 PC 伴奏就绪" }
+                ],
+                tech: "舞蹈伴奏",
+                props: "无"
+            },
+            {
+                id: "18",
+                name: "微电影《归心向春》",
+                time: "20:45",
+                mcs: ["孙子轩", "吴瑞珂"],
+                detail: "晚会情感高潮。视频内嵌感人情谊。舞台需全黑。",
+                steps: [
+                    { role: "舞台执行", action: "视频起立即清场。所有工作人员侧台回避" },
+                    { role: "安全提醒", action: "严禁黑灯期间移动重型道具或开启灯光" }
+                ],
+                tech: "视频内嵌音效",
+                props: "大屏启动"
+            },
+            {
+                id: "19",
+                name: "情景演唱《灯火里的中国》",
+                time: "20:50",
+                mcs: ["(视频无缝衔接)"],
+                detail: "万家灯火的温暖演绎。需衔接微电影结尾的情感气氛。",
+                steps: [
+                    { role: "一楼就位", action: "电影中段已在侧台待命。电影结束立即起乐" }
+                ],
+                tech: "HH*3, DPA*2, DI*1",
+                props: "背景灯饰"
+            },
+            {
+                id: "20",
+                name: "独唱《军营飞来一只百灵》",
+                time: "21:00",
+                mcs: ["吴瑞珂", "郑鸿宇"],
+                detail: "致敬守护者。钢琴伴奏下的清亮悠扬。拾音重点在人声。",
+                steps: [
+                    { role: "执行重点", action: "确认钢琴师已就位。HH*1 确认电量" }
+                ],
+                tech: "HH*1, DI*1 (钢琴)",
+                props: "钢琴"
+            },
+            {
+                id: "21",
+                name: "双人舞《Lovely》",
+                time: "21:10",
+                mcs: ["吴瑞珂", "汪子鑫"],
+                detail: "充满张力的舞步。向阳而生的坚韧展现。",
+                steps: [
+                    { role: "催场接力", action: "20:30 舞者二楼集结下楼" }
+                ],
+                tech: "伴奏播放",
+                props: "无"
+            },
+            {
+                id: "22",
+                name: "川剧变脸",
+                time: "21:15",
+                mcs: ["孙子轩", "方彦威"],
+                detail: "国粹新韵。何伟老师带来互动式变脸表演。需准备互动麦。",
+                steps: [
+                    { role: "一楼就位", action: "检查变脸老师侧台服装避闪区，确保无障碍物" },
+                    { role: "执行重点", action: "老师下台互动时，侧台准备好 HH 随时递送" }
+                ],
+                tech: "HM*1",
+                props: "扇子等变脸物料"
+            },
+            {
+                id: "23",
+                name: "幸运抽奖环节",
+                time: "21:25",
+                mcs: ["孙子轩", "方彦威"],
+                detail: "激动人心的颁奖。涵盖海航机票、GUCCI手表等大奖。口播赞助商。",
+                steps: [
+                    { role: "物料确认", action: "确认奖品托盘、机票凭证、抽奖箱都在侧台" },
+                    { role: "嘉宾引导", action: "依次引导颁奖人下楼：Edvoy负责人、Luka Liu等" }
+                ],
+                tech: "HH*2, 抽奖音效",
+                props: "抽奖箱、奖品"
+            },
+            {
+                id: "26",
+                name: "乐器合奏《落叶归根》",
+                time: "21:35",
+                mcs: ["孙子轩", "方彦威"],
+                detail: "游子的故土情怀。提琴与钢琴的深情对话。",
+                steps: [
+                    { role: "执行重点", action: "抽奖结束瞬间背景音乐转场。道具组极速摆放麦位" }
+                ],
+                tech: "DPA*1 (提琴), DI*1 (钢琴)",
+                props: "谱架、钢琴"
+            },
+            {
+                id: "27",
+                name: "合唱《像你这样的朋友》",
+                time: "21:40",
+                mcs: ["方彦威", "汪子鑫"],
+                detail: "致敬一路同行的友谊。合唱团第三次登场。气氛高涨。",
+                steps: [
+                    { role: "舞台执行", action: "第三次布置 M5 麦架。确认侧台谢幕全员已集结" }
+                ],
+                tech: "M5*4, DI*1",
+                props: "无"
+            },
+            {
+                id: "28",
+                name: "《市集》 & 谢幕大合影",
+                time: "21:45",
+                mcs: ["全体主持人", "导演组"],
+                detail: "晚会圆满落幕。全员上台大合唱、大合影实拍。弋睿导演致谢。",
+                steps: [
+                    { role: "催场接力", action: "21:10 全员下楼集结完毕" },
+                    { role: "一楼就位", action: "歌曲后半段所有演员、志愿者依次上台" },
+                    { role: "执行重点", action: "傅弈飞开启所有在台话筒。陈昊通知摄影师准备合影" }
+                ],
+                tech: "全场麦克风开启, 散场音乐",
+                props: "谢幕横幅/背景"
+            }
+        ];
+
+        let activeId = galaFlow[0].id;
+        const sidebar = document.getElementById('sidebarList');
+        const detailView = document.getElementById('detailView');
+        const searchInput = document.getElementById('searchInput');
+
+        // 渲染侧边栏
+        function renderSidebar(data) {
+            sidebar.innerHTML = '';
+            data.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = `w-full flex items-center justify-between p-3 rounded-xl transition-all border mb-2 ${
+                    activeId === item.id 
+                    ? 'active-tab shadow-md' 
+                    : 'bg-white border-slate-200 hover:border-red-300 text-slate-600'
+                }`;
+                btn.onclick = () => selectProgram(item.id);
+                
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden text-left">
+                        <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded node-badge ${activeId === item.id ? '' : 'bg-slate-100 text-slate-400'}">
+                            ${item.id}
+                        </span>
+                        <span class="text-xs font-black truncate">${item.name}</span>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <span class="text-[10px] opacity-70 font-mono">${item.time}</span>
+                        <i data-lucide="chevron-right" class="w-3 h-3 chevron-icon ${activeId === item.id ? '' : 'opacity-30'}"></i>
+                    </div>
+                `;
+                sidebar.appendChild(btn);
+            });
+            lucide.createIcons();
+        }
+
+        // 渲染详情
+        function renderDetail(id) {
+            const prog = galaFlow.find(p => p.id === id);
+            if (!prog) return;
+
+            detailView.innerHTML = `
+                <div class="p-6 md:p-8 bg-slate-900 text-white relative">
+                    <div class="absolute top-0 right-0 p-8 opacity-5">
+                        <i data-lucide="users" class="w-24 h-24"></i>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="bg-red-600 px-3 py-1 rounded text-[10px] font-black tracking-widest uppercase">NODE ${prog.id}</span>
+                        <div class="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase">
+                            <i data-lucide="clock" class="w-3 h-3"></i> START: ${prog.time}
+                        </div>
+                    </div>
+                    <h2 class="text-3xl font-black mb-6 leading-tight">${prog.name}</h2>
+                    <div class="flex flex-wrap gap-2">
+                        ${prog.mcs.map(mc => `
+                            <span class="bg-white/10 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5">
+                                <i data-lucide="user" class="w-2.5 h-2.5"></i> ${mc}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="p-6 md:p-8 space-y-8 bg-white">
+                    <div class="bg-red-50/50 rounded-2xl p-5 border border-red-100/50">
+                        <div class="flex items-center gap-2 mb-3 text-red-600">
+                            <i data-lucide="quote" class="w-4 h-4 fill-current"></i>
+                            <span class="text-[10px] font-black uppercase tracking-widest">流程氛围 & 主持要点</span>
+                        </div>
+                        <p class="text-slate-700 text-xs font-medium leading-relaxed italic">${prog.detail}</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        ${prog.steps.map((step, idx) => `
+                            <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+                                <div class="text-[9px] font-black text-slate-400 uppercase mb-2 tracking-widest flex items-center gap-1.5">
+                                    <div class="w-1.5 h-1.5 rounded-full ${idx === 2 ? 'bg-amber-500' : 'bg-red-500'}"></div>
+                                    ${step.role}
+                                </div>
+                                <p class="text-[11px] text-slate-700 font-bold leading-normal">${step.action}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-emerald-100 p-2 rounded-lg text-emerald-600">
+                                <i data-lucide="mic" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">音频/话筒配置</h4>
+                                <p class="text-xs font-mono font-bold text-slate-700">${prog.tech}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <i data-lucide="move" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">道具/物料</h4>
+                                <p class="text-xs font-mono font-bold text-slate-700">${prog.props}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4">
+                        <button class="flex items-center gap-2 text-[10px] font-black text-red-600 bg-red-50 px-4 py-2 rounded-full hover:bg-red-100 transition-colors">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> 标记此环节就绪
+                        </button>
+                        <div class="flex items-center gap-1">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <span class="text-[9px] font-black text-slate-400 uppercase">实时连线中</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function selectProgram(id) {
+            activeId = id;
+            const term = searchInput.value.toLowerCase();
+            const filtered = galaFlow.filter(p => p.name.toLowerCase().includes(term) || p.id.includes(term));
+            renderSidebar(filtered);
+            renderDetail(id);
+        }
+
+        // 搜索功能
+        searchInput.oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = galaFlow.filter(p => p.name.toLowerCase().includes(term) || p.id.includes(term));
+            renderSidebar(filtered);
+        };
+
+        // 初始化
+        window.onload = () => {
+            renderSidebar(galaFlow);
+            renderDetail(activeId);
+        };
+    </script>
+</body>
+</html>
